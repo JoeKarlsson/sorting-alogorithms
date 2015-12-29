@@ -59,10 +59,13 @@ var bubbleModule = module.exports = (function() {
 },{"1YiZ5S":6,"buffer":3}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var bubbleModule = require('./bubblesort.js');
-var arr = [5,1,4,2,8];
+var arr = [5, 1, 4, 2,8];
 var bubble = bubbleModule();
 console.log(bubble.bubbleSort(arr), 'Bubble Sort');
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_2ae36fca.js","/")
+
+ var butts = 0;
+
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_ac363bb5.js","/")
 },{"./bubblesort.js":1,"1YiZ5S":6,"buffer":3}],3:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!

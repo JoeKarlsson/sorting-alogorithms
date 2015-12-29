@@ -15,6 +15,7 @@
     "chai": "^3.4.1",
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
+    "gulp-connect": "^2.3.1",
     "mocha": "^2.3.4"
   }
 }
