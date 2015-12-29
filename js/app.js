@@ -1,6 +1,13 @@
 var bubbleModule = require('./bubblesort.js');
-var arr = [5, 1, 4, 2,8];
-var bubble = bubbleModule();
-console.log(bubble.bubbleSort(arr), 'Bubble Sort');
+var quickModule = require('./quicksort.js');
+var mergeModule = require('./mergesort.js');
+var insertionModule = require('./insertionsort.js');
+var selectionModule = require('./selectionsort.js');
+var visualizationModule = require('./visualization.js');
 
- var butts = 0;
+// var arr = [5,1,4,2,8];
+// var visual = visualizationModule();
+// visual.drawArray(arr);
+
+// var bubble = bubbleModule();
+// console.log(bubble.bubbleSort(arr), 'Bubble Sort');

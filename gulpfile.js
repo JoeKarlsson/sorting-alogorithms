@@ -2,18 +2,16 @@ var gulp = require('gulp');
 var connect = require('gulp-connect');
 var browserify = require('gulp-browserify');
 
-// Basic usage
 gulp.task('build', function() {
-  // Single entry point to browserify
   gulp.src('./js/app.js')
         .pipe(browserify({
           insertGlobals : true
         }))
-        .pipe(gulp.dest('./build/js'))
-});
+        .pipe(gulp.dest('./js/build'))
+})
 
 gulp.task('watch', function () {
-  gulp.watch('./js/*', ['livereload', 'build']);
+  gulp.watch('./js/*', ['build', 'livereload']);
   gulp.watch('./css/*', ['livereload']);
 });
 

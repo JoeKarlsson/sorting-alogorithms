@@ -45,11 +45,13 @@ var bubbleModule = module.exports = (function() {
       }
       //return our sorted array
       return array;
-    },
-    getSwap : function() {
-      return 'string';
     }
 
   }
 
 });
+
+// var arr = [5,1,4,2,8];
+// var bubbleModule = bubbleModule();
+// console.log(bubbleModule);
+// console.log(bubbleModule.bubbleSort(arr));

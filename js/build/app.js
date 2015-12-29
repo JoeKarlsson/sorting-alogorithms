@@ -56,17 +56,245 @@ var bubbleModule = module.exports = (function() {
 
 });
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/bubblesort.js","/")
-},{"1YiZ5S":6,"buffer":3}],2:[function(require,module,exports){
+},{"1YiZ5S":11,"buffer":8}],2:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var bubbleModule = require('./bubblesort.js');
-var arr = [5, 1, 4, 2,8];
-var bubble = bubbleModule();
-console.log(bubble.bubbleSort(arr), 'Bubble Sort');
+var quickModule = require('./quicksort.js');
+var mergeModule = require('./mergesort.js');
+var insertionModule = require('./insertionsort.js');
+var selectionModule = require('./selectionsort.js');
+var visualizationModule = require('./visualization.js');
 
- var butts = 0;
+// var arr = [5,1,4,2,8];
+// var visual = visualizationModule();
+// visual.drawArray(arr);
 
-}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_ac363bb5.js","/")
-},{"./bubblesort.js":1,"1YiZ5S":6,"buffer":3}],3:[function(require,module,exports){
+// var bubble = bubbleModule();
+// console.log(bubble.bubbleSort(arr), 'Bubble Sort');
+
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_451c1a0a.js","/")
+},{"./bubblesort.js":1,"./insertionsort.js":3,"./mergesort.js":4,"./quicksort.js":5,"./selectionsort.js":6,"./visualization.js":7,"1YiZ5S":11,"buffer":8}],3:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var insertionModule = module.exports = (function() {
+  //swap method because its used multiple times
+  function swap (array, index1, index2) {
+
+    //store a tmp variable at pos index2
+    var tmp = array[index2];
+
+    //set value  of index2 to our value at index
+    array[index2] = array[index1];
+
+    //set our value of index1 to our stored variable
+    array[index1] = tmp;
+  }
+
+  return {
+    /**
+     * Over each iteration insertion sort removes one element from the input array, finds the location it belongs to and inserts it at this point.
+     * @param  array unsorted array that will be sort
+     * @return array sorted array
+     */
+    insertionSort : function (a) {
+
+      //Iterate over each element in the array - for each element we will be finding the correct place to put this element
+      for (var i = 1; i < a.length-1; i++) {
+
+        //init j to i
+        var j = i;
+
+        //for the current element in the array, swap
+        while ( j > 0 && (a[j - 1] > a[j]) ) {
+          swap(a, j, j - 1)
+          j--;
+        }
+        a[i]
+      };
+      return a;
+    }
+
+  }
+
+});
+
+var arr = [5,1,4,2,8];
+var bubble = insertionModule();
+// console.log(bubble);
+console.log(bubble.insertionSort(arr), ' Insterton Sort');
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/insertionsort.js","/")
+},{"1YiZ5S":11,"buffer":8}],4:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var mergeModule = module.exports = (function() {
+
+  return {
+
+    mergeSort : function (array) {
+      //do stuff here
+      return 'HAVE NOT DONE YET'
+    }
+
+  }
+
+});
+
+// var arr = [5,1,4,2,8];
+// var merge = mergeModule();
+// // console.log(merge);
+// console.log(merge.mergeSort(arr));
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/mergesort.js","/")
+},{"1YiZ5S":11,"buffer":8}],5:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var quickModule = module.exports = (function() {
+  //Privat Methods and variables
+
+  //function for creating our partitions and swapping
+  function partition (arr, pivot, lo, hi) {
+
+    // the value of our pivot, where pivot is the index
+    var pivotValue = arr[pivot];
+
+    // our new pivot to be, and our comparison
+    var index = lo;
+
+    //swap our pivot to the end, because we want it in the hi partition
+    swap(arr, hi, pivot);
+
+    // loop through our array, from our lo value, to our hi value
+    for (var i = lo; i < hi; i++) {
+
+      //if the value at this position is less than our pivot value, then it needs to be sorted
+      //to the left
+      if (arr[i] < pivotValue) {
+
+        //swap it and the index, and now that we know it should be sorted
+        //increment the index because its been sorted
+        swap(arr, i, index);
+        index++;
+      }
+    }
+
+    //swap our hi value back with the index value, this is putting our pivot value
+    //back where it rightfully belongs
+    swap(arr, index, hi);
+
+    //return the index for a new pivot in recursively calling quickSort
+    return index;
+  }
+
+  //swap method because its used multiple times
+  function swap (array, index1, index2) {
+
+    //store a tmp variable at pos index2
+    var tmp = array[index2];
+
+    //set value  of index2 to our value at index
+    array[index2] = array[index1];
+
+    //set our value of index1 to our stored variable
+    array[index1] = tmp;
+  }
+
+  //Public methods
+  return {
+    /*  Known as partition-exchange sort, quicksort picks a pivot from a partition
+    *   (assuming the first partition is our array). Reorders our array into lower
+    *   higher value partitions, then recursively creates partitions until it cannot.
+    *  takes in the array and optionally low and high parameters for recursion
+    */
+    quickSort : function(array, low, high) {
+
+      //reset our pivot for recursive use
+      var pivot = null;
+
+      //used for initialization, begin on the end
+      if (typeof low !== 'number') {
+        low = 0;
+      }
+
+      //used for initialization, begin on the end
+      if (typeof high !== 'number') {
+        high = array.length - 1;
+      }
+
+      //base case for recursion, if low is >= high, then its already sorted
+      if (low < high) {
+
+        //create a point between our low and high values
+        pivot = low + (Math.ceil((high - low) * 0.5));
+
+        //create the positions and partitions to be recursively sorted
+        var nextPivot = partition(array, pivot, low, high);
+
+        //sort from low, to the pivot - 1, because nextPivot belongs where it is
+        this.quickSort(array, low, nextPivot - 1);
+
+        //sort from pivot + 1 to high
+        this.quickSort(array, nextPivot + 1, high);
+
+      }
+
+      //return the sorted array
+      return array;
+    }
+  }
+
+});
+
+// var arr = [5, 1, 4, 2, 8];
+// var quick = quickModule();
+// console.log(quick.quickSort(arr));
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/quicksort.js","/")
+},{"1YiZ5S":11,"buffer":8}],6:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var selectionModule = module.exports = (function() {
+
+  return {
+
+    selectionSort : function (array) {
+      //do stuff here
+      return 'HAVE NOT DONE YET'
+    }
+
+  }
+
+});
+
+// var arr = [5,1,4,2,8];
+// var bubble = selectionModule();
+// // console.log(bubble);
+// console.log(bubble.bubbleSort(arr));
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/selectionsort.js","/")
+},{"1YiZ5S":11,"buffer":8}],7:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var visualizationModule = module.exports = (function() {
+
+  return {
+
+    drawArray : function (array) {
+      //get our container in static HTML page
+      var container = document.querySelector('#visualizer');
+
+    }
+
+  }
+
+});
+
+var arr = [5,1,4,2,8];
+var visual = visualizationModule();
+visual.drawArray(arr);
+}).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/visualization.js","/")
+},{"1YiZ5S":11,"buffer":8}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1179,7 +1407,7 @@ function assert (test, message) {
 }
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/index.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer")
-},{"1YiZ5S":6,"base64-js":4,"buffer":3,"ieee754":5}],4:[function(require,module,exports){
+},{"1YiZ5S":11,"base64-js":9,"buffer":8,"ieee754":10}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
@@ -1307,7 +1535,7 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib/b64.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/base64-js/lib")
-},{"1YiZ5S":6,"buffer":3}],5:[function(require,module,exports){
+},{"1YiZ5S":11,"buffer":8}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -1395,7 +1623,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 }
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754/index.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/buffer/node_modules/ieee754")
-},{"1YiZ5S":6,"buffer":3}],6:[function(require,module,exports){
+},{"1YiZ5S":11,"buffer":8}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 // shim for using process in browser
 
@@ -1462,4 +1690,4 @@ process.chdir = function (dir) {
 };
 
 }).call(this,require("1YiZ5S"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/../node_modules/gulp-browserify/node_modules/browserify/node_modules/process/browser.js","/../node_modules/gulp-browserify/node_modules/browserify/node_modules/process")
-},{"1YiZ5S":6,"buffer":3}]},{},[2])
+},{"1YiZ5S":11,"buffer":8}]},{},[2])

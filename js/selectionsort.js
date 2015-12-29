@@ -2,6 +2,7 @@
 
 var selectionModule = module.exports = (function() {
 
+  //Everything after the return statement is public
   return {
 
     selectionSort : function (array) {
@@ -14,6 +15,6 @@ var selectionModule = module.exports = (function() {
 });
 
 // var arr = [5,1,4,2,8];
-// var bubble = selectionModule();
-// // console.log(bubble);
-// console.log(bubble.bubbleSort(arr));
+// var selection = selectionModule();
+// // console.log(selection);
+// console.log(selection.selectionSort(arr));
