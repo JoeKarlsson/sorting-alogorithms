@@ -40,20 +40,16 @@ var bubbleModule = module.exports = (function() {
             //flag our conditional to continue looping
             swapped = true;
 
-            i++;
-
           }
         }
       }
       //return our sorted array
       return array;
+    },
+    getSwap : function() {
+      return 'string';
     }
 
   }
 
 });
-
-// var arr = [5,1,4,2,8];
-// var bubble = bubbleModule();
-// // console.log(bubble);
-// console.log(bubble.bubbleSort(arr));
