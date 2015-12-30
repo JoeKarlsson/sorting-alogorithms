@@ -3,16 +3,16 @@ var connect = require('gulp-connect');
 var browserify = require('gulp-browserify');
 
 gulp.task('build', function() {
-  gulp.src('./js/app.js')
+  gulp.src('./public/js/app.js')
         .pipe(browserify({
           insertGlobals : true
         }))
-        .pipe(gulp.dest('./js/build'))
+        .pipe(gulp.dest('./public/js/build'))
 })
 
 gulp.task('watch', function () {
-  gulp.watch('./js/*', ['build', 'livereload']);
-  gulp.watch('./css/*', ['livereload']);
+  gulp.watch('./public/js/*', ['build', 'livereload']);
+  gulp.watch('./public/css/*', ['livereload']);
 });
 
 gulp.task('connect', function() {
