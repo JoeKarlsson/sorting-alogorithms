@@ -96,6 +96,6 @@ var quickModule = module.exports = (function() {
 
 });
 
-// var arr = [5, 1, 4, 2, 8];
-// var quick = quickModule();
-// console.log(quick.quickSort(arr));
+var arr = [5, 1, 4, 2, 8];
+var quick = quickModule();
+console.log(quick.quickSort(arr));

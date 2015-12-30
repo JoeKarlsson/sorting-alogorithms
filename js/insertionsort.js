@@ -28,12 +28,15 @@ var insertionModule = module.exports = (function() {
         //init j to i
         var j = i;
 
-        //for the current element in the array, swap
+        //while our previous number is greater than 0, and the number we're comparing is less than our previous number enter our loop
         while ( j > 0 && (a[j - 1] > a[j]) ) {
+
+          //shift the number down the array and give us a space to insert our current value
           swap(a, j, j - 1)
+
+          //decrement j to go through our entire array
           j--;
         }
-        a[i]
       };
       return a;
     }
