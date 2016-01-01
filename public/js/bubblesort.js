@@ -1,5 +1,6 @@
 'use strict';
-
+var visualizationModule = require('./visualization.js');
+var visualizer = visualizationModule();
 var bubbleModule = module.exports = (function() {
 
   function endAnimation(array) {
@@ -48,6 +49,8 @@ var bubbleModule = module.exports = (function() {
           swapped = true;
 
           console.log(array)
+
+          visualizer.drawArray(array);
         }
         i++
       }
@@ -60,8 +63,6 @@ var bubbleModule = module.exports = (function() {
 });
 
 // var arr = [5,1,4,2,8];
-var arr = [4,3,2,1];
-var bubbleModule = bubbleModule();
-
-// console.log(bubbleModule);
-bubbleModule.bubbleSort(arr);
+// var arr = [4,3,2,1];
+// var bubbleModule = bubbleModule();
+// bubbleModule.bubbleSort(arr);

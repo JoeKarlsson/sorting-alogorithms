@@ -1397,7 +1397,8 @@ process.chdir = function (dir) {
 },{"buffer":1,"oMfpAn":4}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
-
+var visualizationModule = require('./visualization.js');
+var visualizer = visualizationModule();
 var bubbleModule = module.exports = (function() {
 
   function endAnimation(array) {
@@ -1446,6 +1447,8 @@ var bubbleModule = module.exports = (function() {
           swapped = true;
 
           console.log(array)
+
+          visualizer.drawArray(array);
         }
         i++
       }
@@ -1458,13 +1461,11 @@ var bubbleModule = module.exports = (function() {
 });
 
 // var arr = [5,1,4,2,8];
-var arr = [4,3,2,1];
-var bubbleModule = bubbleModule();
-
-// console.log(bubbleModule);
-bubbleModule.bubbleSort(arr);
+// var arr = [4,3,2,1];
+// var bubbleModule = bubbleModule();
+// bubbleModule.bubbleSort(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/bubblesort.js","/")
-},{"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
+},{"./visualization.js":11,"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var bubbleModule = require('./bubblesort.js');
 var quickModule = require('./quicksort.js');
@@ -1473,13 +1474,44 @@ var insertionModule = require('./insertionsort.js');
 var selectionModule = require('./selectionsort.js');
 var visualizationModule = require('./visualization.js');
 
-var arr = [5,1,4,2,8];
+//Init modules
+var visualizer = visualizationModule();
+var bubble = bubbleModule();
 
-// var bubble = bubbleModule();
-// var result = bubble.bubbleSort(arr)
-// console.log(result, 'Bubble Sort');
+var shuffledArray;
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_33aa93e3.js","/")
+//In-app functions
+//method to create buttons
+function createButton (action, name) {
+  var button = document.createElement('button');
+  button.innerHTML = name;
+  button.setAttribute('id', action);
+  document.getElementById('visualizer').appendChild(button);
+}
+
+//method to create a new random dataset and clear the currently sorted one
+function reset () {
+  shuffledArray = visualizer.getRandomArray();
+  visualizer.drawArray(shuffledArray);
+}
+
+$(document).ready(function() {
+  //initialized our random array
+  reset();
+
+  $('#bubble').click(function() {
+    bubble.bubbleSort(shuffledArray);
+  });
+
+  $('#reset').click(function() {
+    reset();
+  });
+});
+
+//create a button for each algorithm and reset func
+createButton('bubble', 'Bubble Sort');
+createButton('reset', 'Reset');
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_a0a0e023.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":11,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
@@ -1748,11 +1780,103 @@ var selectionModule = module.exports = (function() {
 
 var visualizationModule = module.exports = (function() {
 
+  //length of the array
+  var inputNumber = 70;
+
+  //method called in createGrid that takes in
+  //data from the array and makes a visual
+  //representation from it according to height
+  //and color
+  function createCell (data, index) {
+
+    var cell = document.createElement('div');
+    cell.style.width = '8px';
+    cell.style.height = data + '2px';
+    cell.style.fontSize = '8px';
+    cell.style.color = 'white';
+    cell.style.padding = '5px';
+    cell.id = 'div' + index;
+    cell.innerHTML = data;
+
+    //hex value parsing
+    data = data.toString(16);
+    if (data.length < 2) {
+      data = '0' + data;
+    }
+    cell.style.backgroundColor = '#' + '00' + data + data;
+    return cell;
+  }
+
   return {
+
+    //first generate a sorted array for inputNumber length
+    makeSorted : function (input) {
+      var array = [];
+      for (var i = 0; i < inputNumber; i++) {
+        array.push(i + 1);
+      }
+      return array;
+    },
+
+    //set method for later user interaction
+    setLength : function (input) {
+      inputNumber = input;
+    },
+
+    //take our newly generated sorted array
+    //and randomly scramble it
+    getRandomArray : function() {
+      var newArray = this.makeSorted(inputNumber);
+      var currentIndex = newArray.length;
+      var temporaryValue;
+      var randomIndex;
+
+      //while there remain elements to shuffle
+      while (currentIndex > 0) {
+
+        //pick a remaining element
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        //and swap it with the current element
+        temporaryValue = newArray[currentIndex];
+        newArray[currentIndex] = newArray[randomIndex];
+        newArray[randomIndex] = temporaryValue;
+      }
+      return newArray;
+    },
 
     drawArray : function (array) {
       //get our container in static HTML page
-      // var container = document.querySelector('#visualizer');
+      var container = document.querySelector('#visualizer');
+
+      createGrid( array );
+
+      //method generates a dom element with an
+      //array parameter
+      function createGrid (array) {
+
+        //if it exists already, clear it
+        if (document.querySelector('#grid')) {
+          container.removeChild(document.querySelector('#grid'));
+        }
+
+        //create a new DOM element to append the pieces to
+        var grid = document.createElement('div');
+        grid.id = 'grid';
+        container.appendChild(grid);
+
+        //loop through and for the arrays length
+        //generate a new cell for the arrays data
+        var piece;
+        for (var i = 0; i < array.length; i++) {
+          piece = createCell(array[i], i);
+
+          //attach it to the container
+          grid.appendChild(piece);
+        }
+
+      }
 
     }
 
@@ -1760,8 +1884,8 @@ var visualizationModule = module.exports = (function() {
 
 });
 
-var arr = [5,1,4,2,8];
-var visual = visualizationModule();
-visual.drawArray(arr);
+// var arr = [14, 5, 48, 1,4,2,8, 15, 3, 6, 20];
+// var visual = visualizationModule();
+// visual.drawArray(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/visualization.js","/")
 },{"buffer":1,"oMfpAn":4}]},{},[6])
