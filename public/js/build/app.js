@@ -1400,6 +1400,11 @@ process.chdir = function (dir) {
 
 var bubbleModule = module.exports = (function() {
 
+  function endAnimation(array) {
+    console.log('END');
+    return array
+  }
+
   /* Bubble sort works in a nature similar to its name, the lesser - or lighter - values
   *  will 'bubble' to the beginning of the array, and the heavier values will 'sink'
   *  to the bottom.
@@ -1412,36 +1417,39 @@ var bubbleModule = module.exports = (function() {
       var prev;
       var swapped = true;
 
-      //Continue making passes until we have a clean pass with no swaps.
-      while (swapped) {
+      //loop through our array
+      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 500);
 
-        //init swapped to false at the top of the while loop
-        swapped = false;
+      var i = 1;
 
-        //loop through our array
-        for (var i = 0; i < array.length; i++) {
+      function bubbleFrame(array, callback) {
 
-          //at each position, compare this element with the previous
-          //if this one is greater than our previous one swap it and
-          //flag our conditional to loop through our array again
-          if (array[i - 1] > array[i]) {
+        if (i  >= array.length ) {
 
-            //store the prev variable to our previous element
-            prev = array[i - 1];
-
-            //set our previous element to this element
-            array[i - 1] = array[i];
-
-            //set this element to our prev variable
-            array[i] = prev;
-
-            //flag our conditional to continue looping
-            swapped = true;
-
+          console.log('end of pass')
+          if (!swapped ) {
+            console.log('enter clear Interval')
+            clearInterval(interval);
+            callback(array);
           }
+          i = 1;
+          swapped = false;
         }
+
+        if (array[i - 1] > array[i]) {
+          prev = array[i - 1];
+
+          array[i - 1] = array[i];
+
+          array[i] = prev;
+
+          swapped = true;
+
+          console.log(array)
+        }
+        i++
       }
-      //return our sorted array
+
       return array;
     }
 
@@ -1450,9 +1458,11 @@ var bubbleModule = module.exports = (function() {
 });
 
 // var arr = [5,1,4,2,8];
-// var bubbleModule = bubbleModule();
+var arr = [4,3,2,1];
+var bubbleModule = bubbleModule();
+
 // console.log(bubbleModule);
-// console.log(bubbleModule.bubbleSort(arr));
+bubbleModule.bubbleSort(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/bubblesort.js","/")
 },{"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
@@ -1464,13 +1474,12 @@ var selectionModule = require('./selectionsort.js');
 var visualizationModule = require('./visualization.js');
 
 var arr = [5,1,4,2,8];
-var visual = visualizationModule();
-visual.drawArray(arr);
 
-var bubble = bubbleModule();
-console.log(bubble.bubbleSort(arr), 'Bubble Sort');
+// var bubble = bubbleModule();
+// var result = bubble.bubbleSort(arr)
+// console.log(result, 'Bubble Sort');
 
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5404a76a.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_33aa93e3.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":11,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
@@ -1520,10 +1529,10 @@ var insertionModule = module.exports = (function() {
 
 });
 
-var arr = [5,1,4,2,8];
-var bubble = insertionModule();
-// console.log(bubble);
-console.log(bubble.insertionSort(arr), ' Insterton Sort');
+// var arr = [5,1,4,2,8];
+// var bubble = insertionModule();
+// // console.log(bubble);
+// console.log(bubble.insertionSort(arr), ' Insterton Sort');
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/insertionsort.js","/")
 },{"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
@@ -1592,12 +1601,12 @@ var mergeModule = module.exports = (function() {
   }
 });
 
-var arr = [6,3,8,1,5,4,7,2];
-// var arr = [3,2,1]
-var merge = mergeModule();
+// var arr = [6,3,8,1,5,4,7,2];
+// // var arr = [3,2,1]
+// var merge = mergeModule();
 
-// console.log(merge);
-console.log(merge.mergeSort(arr));
+// // console.log(merge);
+// console.log(merge.mergeSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/mergesort.js","/")
 },{"buffer":1,"oMfpAn":4}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
@@ -1699,9 +1708,9 @@ var quickModule = module.exports = (function() {
 
 });
 
-var arr = [5, 1, 4, 2, 8];
-var quick = quickModule();
-console.log(quick.quickSort(arr));
+// var arr = [5, 1, 4, 2, 8];
+// var quick = quickModule();
+// console.log(quick.quickSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/quicksort.js","/")
 },{"buffer":1,"oMfpAn":4}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
@@ -1751,8 +1760,8 @@ var visualizationModule = module.exports = (function() {
 
 });
 
-// var arr = [5,1,4,2,8];
-// var visual = visualizationModule();
-// visual.drawArray(arr);
+var arr = [5,1,4,2,8];
+var visual = visualizationModule();
+visual.drawArray(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/visualization.js","/")
 },{"buffer":1,"oMfpAn":4}]},{},[6])

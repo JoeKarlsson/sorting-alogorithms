@@ -63,9 +63,9 @@ var mergeModule = module.exports = (function() {
   }
 });
 
-var arr = [6,3,8,1,5,4,7,2];
-// var arr = [3,2,1]
-var merge = mergeModule();
+// var arr = [6,3,8,1,5,4,7,2];
+// // var arr = [3,2,1]
+// var merge = mergeModule();
 
-// console.log(merge);
-console.log(merge.mergeSort(arr));
+// // console.log(merge);
+// console.log(merge.mergeSort(arr));

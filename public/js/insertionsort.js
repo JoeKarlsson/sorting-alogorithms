@@ -45,7 +45,7 @@ var insertionModule = module.exports = (function() {
 
 });
 
-var arr = [5,1,4,2,8];
-var bubble = insertionModule();
-// console.log(bubble);
-console.log(bubble.insertionSort(arr), ' Insterton Sort');
+// var arr = [5,1,4,2,8];
+// var bubble = insertionModule();
+// // console.log(bubble);
+// console.log(bubble.insertionSort(arr), ' Insterton Sort');

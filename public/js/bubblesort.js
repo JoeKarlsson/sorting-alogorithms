@@ -2,6 +2,11 @@
 
 var bubbleModule = module.exports = (function() {
 
+  function endAnimation(array) {
+    console.log('END');
+    return array
+  }
+
   /* Bubble sort works in a nature similar to its name, the lesser - or lighter - values
   *  will 'bubble' to the beginning of the array, and the heavier values will 'sink'
   *  to the bottom.
@@ -14,36 +19,39 @@ var bubbleModule = module.exports = (function() {
       var prev;
       var swapped = true;
 
-      //Continue making passes until we have a clean pass with no swaps.
-      while (swapped) {
+      //loop through our array
+      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 500);
 
-        //init swapped to false at the top of the while loop
-        swapped = false;
+      var i = 1;
 
-        //loop through our array
-        for (var i = 0; i < array.length; i++) {
+      function bubbleFrame(array, callback) {
 
-          //at each position, compare this element with the previous
-          //if this one is greater than our previous one swap it and
-          //flag our conditional to loop through our array again
-          if (array[i - 1] > array[i]) {
+        if (i  >= array.length ) {
 
-            //store the prev variable to our previous element
-            prev = array[i - 1];
-
-            //set our previous element to this element
-            array[i - 1] = array[i];
-
-            //set this element to our prev variable
-            array[i] = prev;
-
-            //flag our conditional to continue looping
-            swapped = true;
-
+          console.log('end of pass')
+          if (!swapped ) {
+            console.log('enter clear Interval')
+            clearInterval(interval);
+            callback(array);
           }
+          i = 1;
+          swapped = false;
         }
+
+        if (array[i - 1] > array[i]) {
+          prev = array[i - 1];
+
+          array[i - 1] = array[i];
+
+          array[i] = prev;
+
+          swapped = true;
+
+          console.log(array)
+        }
+        i++
       }
-      //return our sorted array
+
       return array;
     }
 
@@ -52,6 +60,8 @@ var bubbleModule = module.exports = (function() {
 });
 
 // var arr = [5,1,4,2,8];
-// var bubbleModule = bubbleModule();
+var arr = [4,3,2,1];
+var bubbleModule = bubbleModule();
+
 // console.log(bubbleModule);
-// console.log(bubbleModule.bubbleSort(arr));
+bubbleModule.bubbleSort(arr);
