@@ -1397,8 +1397,10 @@ process.chdir = function (dir) {
 },{"buffer":1,"oMfpAn":4}],5:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
+
 var visualizationModule = require('./visualization.js');
 var visualizer = visualizationModule();
+
 var bubbleModule = module.exports = (function() {
 
   function endAnimation(array) {
@@ -1406,9 +1408,8 @@ var bubbleModule = module.exports = (function() {
     return array
   }
 
-  /* Bubble sort works in a nature similar to its name, the lesser - or lighter - values
-  *  will 'bubble' to the beginning of the array, and the heavier values will 'sink'
-  *  to the bottom.
+  /*
+  Bubble sort works in a nature similar to its name, the lesser - or lighter - values will 'bubble' to the beginning of the array, and the heavier values will 'sink' to the bottom.
   */
   return {
 
@@ -1477,7 +1478,9 @@ var visualizationModule = require('./visualization.js');
 //Init modules
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
+var insertion = insertionModule();
 
+//init shared variables
 var shuffledArray;
 
 //In-app functions
@@ -1496,11 +1499,15 @@ function reset () {
 }
 
 $(document).ready(function() {
-  //initialized our random array
+  //init our random array
   reset();
 
   $('#bubble').click(function() {
     bubble.bubbleSort(shuffledArray);
+  });
+
+  $('#insertion').click(function() {
+    insertion.insertionSort(shuffledArray);
   });
 
   $('#reset').click(function() {
@@ -1510,11 +1517,15 @@ $(document).ready(function() {
 
 //create a button for each algorithm and reset func
 createButton('bubble', 'Bubble Sort');
+createButton('insertion', 'Insertion Sort');
 createButton('reset', 'Reset');
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_a0a0e023.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_25407d65.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":11,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
+
+var visualizationModule = require('./visualization.js');
+var visualizer = visualizationModule();
 
 var insertionModule = module.exports = (function() {
   //swap method because its used multiple times
@@ -1549,6 +1560,7 @@ var insertionModule = module.exports = (function() {
 
           //shift the number down the array and give us a space to insert our current value
           swap(a, j, j - 1)
+          visualizer.drawArray(a);
 
           //decrement j to go through our entire array
           j--;
@@ -1566,7 +1578,7 @@ var insertionModule = module.exports = (function() {
 // // console.log(bubble);
 // console.log(bubble.insertionSort(arr), ' Insterton Sort');
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/insertionsort.js","/")
-},{"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
+},{"./visualization.js":11,"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 

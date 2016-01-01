@@ -1,6 +1,8 @@
 'use strict';
+
 var visualizationModule = require('./visualization.js');
 var visualizer = visualizationModule();
+
 var bubbleModule = module.exports = (function() {
 
   function endAnimation(array) {
@@ -8,9 +10,8 @@ var bubbleModule = module.exports = (function() {
     return array
   }
 
-  /* Bubble sort works in a nature similar to its name, the lesser - or lighter - values
-  *  will 'bubble' to the beginning of the array, and the heavier values will 'sink'
-  *  to the bottom.
+  /*
+  Bubble sort works in a nature similar to its name, the lesser - or lighter - values will 'bubble' to the beginning of the array, and the heavier values will 'sink' to the bottom.
   */
   return {
 

@@ -1,5 +1,8 @@
 'use strict';
 
+var visualizationModule = require('./visualization.js');
+var visualizer = visualizationModule();
+
 var insertionModule = module.exports = (function() {
   //swap method because its used multiple times
   function swap (array, index1, index2) {
@@ -33,6 +36,7 @@ var insertionModule = module.exports = (function() {
 
           //shift the number down the array and give us a space to insert our current value
           swap(a, j, j - 1)
+          visualizer.drawArray(a);
 
           //decrement j to go through our entire array
           j--;

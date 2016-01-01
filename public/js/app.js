@@ -8,7 +8,9 @@ var visualizationModule = require('./visualization.js');
 //Init modules
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
+var insertion = insertionModule();
 
+//init shared variables
 var shuffledArray;
 
 //In-app functions
@@ -27,11 +29,15 @@ function reset () {
 }
 
 $(document).ready(function() {
-  //initialized our random array
+  //init our random array
   reset();
 
   $('#bubble').click(function() {
     bubble.bubbleSort(shuffledArray);
+  });
+
+  $('#insertion').click(function() {
+    insertion.insertionSort(shuffledArray);
   });
 
   $('#reset').click(function() {
@@ -41,4 +47,5 @@ $(document).ready(function() {
 
 //create a button for each algorithm and reset func
 createButton('bubble', 'Bubble Sort');
+createButton('insertion', 'Insertion Sort');
 createButton('reset', 'Reset');
