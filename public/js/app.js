@@ -5,7 +5,7 @@ var insertionModule = require('./insertionsort.js');
 var selectionModule = require('./selectionsort.js');
 var visualizationModule = require('./visualization.js');
 
-//Init modules
+//Initilize modules
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
 var insertion = insertionModule();
@@ -14,7 +14,7 @@ var quick = quickModule();
 var merge = mergeModule();
 
 
-//init shared variables
+//Initilize shared variables
 var shuffledArray;
 
 //In-app functions

@@ -1398,13 +1398,13 @@ process.chdir = function (dir) {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
-var visualizationModule = require('./visualization.js');
+var visualizationModule = require( './visualization.js' );
 var visualizer = visualizationModule();
 
-var bubbleModule = module.exports = (function() {
+var bubbleModule = module.exports = ( function() {
 
-  function endAnimation(array) {
-    console.log('END');
+  function endAnimation( array ) {
+    console.log( 'END' );
     return array
   }
 
@@ -1413,32 +1413,32 @@ var bubbleModule = module.exports = (function() {
   */
   return {
 
-    bubbleSort : function (array) {
+    bubbleSort : function ( array ) {
 
       //create variables for swapping and our while loop condition
       var prev;
       var swapped = true;
 
       //loop through our array
-      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 10);
+      var interval = setInterval( bubbleFrame.bind( null, array, endAnimation ), 10 );
 
       var i = 1;
 
-      function bubbleFrame(array, callback) {
+      function bubbleFrame( array, callback ) {
 
-        if (i  >= array.length ) {
+        if ( i  >= array.length ) {
 
-          console.log('end of pass')
-          if (!swapped ) {
-            console.log('enter clear Interval')
-            clearInterval(interval);
-            callback(array);
+          console.log( 'end of pass' )
+          if ( !swapped ) {
+            console.log( 'enter clear Interval' )
+            clearInterval( interval );
+            callback( array );
           }
           i = 1;
           swapped = false;
         }
 
-        if (array[i - 1] > array[i]) {
+        if ( array[i - 1] > array[i] ) {
           prev = array[i - 1];
 
           array[i - 1] = array[i];
@@ -1447,9 +1447,7 @@ var bubbleModule = module.exports = (function() {
 
           swapped = true;
 
-          console.log(array)
-
-          visualizer.drawArray(array);
+          visualizer.drawArray( array );
         }
         i++
       }
@@ -1475,7 +1473,7 @@ var insertionModule = require('./insertionsort.js');
 var selectionModule = require('./selectionsort.js');
 var visualizationModule = require('./visualization.js');
 
-//Init modules
+//Initilize modules
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
 var insertion = insertionModule();
@@ -1484,7 +1482,7 @@ var quick = quickModule();
 var merge = mergeModule();
 
 
-//init shared variables
+//Initilize shared variables
 var shuffledArray;
 
 //In-app functions
@@ -1528,7 +1526,7 @@ createButton('bubble', 'Bubble Sort');
 createButton('insertion', 'Insertion Sort');
 createButton('selection', 'Selection Sort');
 createButton('reset', 'Reset');
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_a27adbe.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_393b5fbf.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":12,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
@@ -1552,6 +1550,7 @@ var insertionModule = module.exports = (function() {
   }
 
   return {
+
     /**
      * Over each iteration insertion sort removes one element from the input array, finds the location it belongs to and inserts it at this point.
      * @param  array unsorted array that will be sort
@@ -1566,7 +1565,6 @@ var insertionModule = module.exports = (function() {
       var i = 1;
 
       //Iterate over each element in the array - for each element we will be finding the correct place to put this element
-      // for (var i = 1; i < a.length-1; i++) {
       function insertionFrame(array, callback) {
 
         //init j to i
@@ -1784,23 +1782,48 @@ var quickModule = module.exports = (function() {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
-var visualizationModule = require('./visualization.js');
-var sortHelperModule = require('./sortHelper.js');
+var visualizationModule = require( './visualization.js' );
+var sortHelperModule = require( './sortHelper.js' );
 
 var visualizer = visualizationModule();
 var sortHelper = sortHelperModule();
 
-var selectionModule = module.exports = (function() {
+var selectionModule = module.exports = ( function () {
+
+  /**
+   * Callback function that is called when the sorting animation is completed
+   * @param  {[array]} array
+   * @return {[array]}
+   */
+  function endAnimation( array ) {
+    console.log( 'END' );
+    return array
+  }
 
   return {
 
+    /**
+     * The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, exchanging (swapping) it with the leftmost unsorted element (putting it in sorted order), and moving the sublist boundaries one element to the right.
+     */
     selectionSort : function ( array ) {
 
       // advance the position through the entire array (could do j < n-1 because single element is also min element)
-      for ( var i = 0; i < array.length - 1; i++ ) {
+      var interval = setInterval( selectionFrame.bind( null, array, endAnimation ), 10 );
 
-        // find the min element in the unsorted a[i .. n-1] assume the min is the first element
-        var min = i;
+      //for ( var i = 0; i < array.length - 1; i++ ) {
+
+      var i = 0;
+
+      // find the min element in the unsorted a[i .. n-1] assume the min is the first element
+      var min = i;
+
+      function selectionFrame( array, callback ) {
+
+        if ( i >=  array.length - 1 ) {
+          console.log('enter clear Interval')
+          clearInterval(interval);
+          callback(array);
+        }
 
         // Test against elements after j to find the smallest
         for ( var j = i + 1; j < array.length; j++ ) {
@@ -1817,9 +1840,13 @@ var selectionModule = module.exports = (function() {
         if ( min !== i ) {
           sortHelper.swap( array, i, min );
 
+          console.log( array )
+
           //draw the newly swapped array onto the DOM
-          visualizer.drawArray(array);
+          visualizer.drawArray( array );
         }
+
+        i++;
       }
       return array;
     }
@@ -1828,9 +1855,9 @@ var selectionModule = module.exports = (function() {
 
 });
 
-var arr = [5,1,4,2,8];
-var selection = selectionModule();
-console.log(selection.selectionSort(arr));
+// var arr = [5,1,4,2,8];
+// var selection = selectionModule();
+// console.log(selection.selectionSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/selectionsort.js","/")
 },{"./sortHelper.js":11,"./visualization.js":12,"buffer":1,"oMfpAn":4}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){

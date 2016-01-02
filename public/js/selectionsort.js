@@ -1,12 +1,22 @@
 'use strict';
 
-var visualizationModule = require('./visualization.js');
-var sortHelperModule = require('./sortHelper.js');
+var visualizationModule = require( './visualization.js' );
+var sortHelperModule = require( './sortHelper.js' );
 
 var visualizer = visualizationModule();
 var sortHelper = sortHelperModule();
 
-var selectionModule = module.exports = (function() {
+var selectionModule = module.exports = ( function () {
+
+  /**
+   * Callback function that is called when the sorting animation is completed
+   * @param  {[array]} array
+   * @return {[array]}
+   */
+  function endAnimation( array ) {
+    console.log( 'END' );
+    return array
+  }
 
   return {
 
@@ -16,10 +26,22 @@ var selectionModule = module.exports = (function() {
     selectionSort : function ( array ) {
 
       // advance the position through the entire array (could do j < n-1 because single element is also min element)
-      for ( var i = 0; i < array.length - 1; i++ ) {
+      var interval = setInterval( selectionFrame.bind( null, array, endAnimation ), 10 );
 
-        // find the min element in the unsorted a[i .. n-1] assume the min is the first element
-        var min = i;
+      //for ( var i = 0; i < array.length - 1; i++ ) {
+
+      var i = 0;
+
+      // find the min element in the unsorted a[i .. n-1] assume the min is the first element
+      var min = i;
+
+      function selectionFrame( array, callback ) {
+
+        if ( i >=  array.length - 1 ) {
+          console.log('enter clear Interval')
+          clearInterval(interval);
+          callback(array);
+        }
 
         // Test against elements after j to find the smallest
         for ( var j = i + 1; j < array.length; j++ ) {
@@ -36,9 +58,13 @@ var selectionModule = module.exports = (function() {
         if ( min !== i ) {
           sortHelper.swap( array, i, min );
 
+          console.log( array )
+
           //draw the newly swapped array onto the DOM
-          visualizer.drawArray(array);
+          visualizer.drawArray( array );
         }
+
+        i++;
       }
       return array;
     }
@@ -47,6 +73,6 @@ var selectionModule = module.exports = (function() {
 
 });
 
-var arr = [5,1,4,2,8];
-var selection = selectionModule();
-console.log(selection.selectionSort(arr));
+// var arr = [5,1,4,2,8];
+// var selection = selectionModule();
+// console.log(selection.selectionSort(arr));

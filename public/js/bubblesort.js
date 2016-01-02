@@ -1,12 +1,12 @@
 'use strict';
 
-var visualizationModule = require('./visualization.js');
+var visualizationModule = require( './visualization.js' );
 var visualizer = visualizationModule();
 
-var bubbleModule = module.exports = (function() {
+var bubbleModule = module.exports = ( function() {
 
-  function endAnimation(array) {
-    console.log('END');
+  function endAnimation( array ) {
+    console.log( 'END' );
     return array
   }
 
@@ -15,32 +15,32 @@ var bubbleModule = module.exports = (function() {
   */
   return {
 
-    bubbleSort : function (array) {
+    bubbleSort : function ( array ) {
 
       //create variables for swapping and our while loop condition
       var prev;
       var swapped = true;
 
       //loop through our array
-      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 10);
+      var interval = setInterval( bubbleFrame.bind( null, array, endAnimation ), 10 );
 
       var i = 1;
 
-      function bubbleFrame(array, callback) {
+      function bubbleFrame( array, callback ) {
 
-        if (i  >= array.length ) {
+        if ( i  >= array.length ) {
 
-          console.log('end of pass')
-          if (!swapped ) {
-            console.log('enter clear Interval')
-            clearInterval(interval);
-            callback(array);
+          console.log( 'end of pass' )
+          if ( !swapped ) {
+            console.log( 'enter clear Interval' )
+            clearInterval( interval );
+            callback( array );
           }
           i = 1;
           swapped = false;
         }
 
-        if (array[i - 1] > array[i]) {
+        if ( array[i - 1] > array[i] ) {
           prev = array[i - 1];
 
           array[i - 1] = array[i];
@@ -49,9 +49,7 @@ var bubbleModule = module.exports = (function() {
 
           swapped = true;
 
-          console.log(array)
-
-          visualizer.drawArray(array);
+          visualizer.drawArray( array );
         }
         i++
       }
