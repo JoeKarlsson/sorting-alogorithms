@@ -1466,7 +1466,7 @@ var bubbleModule = module.exports = (function() {
 // var bubbleModule = bubbleModule();
 // bubbleModule.bubbleSort(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/bubblesort.js","/")
-},{"./visualization.js":11,"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
+},{"./visualization.js":12,"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var bubbleModule = require('./bubblesort.js');
 var quickModule = require('./quicksort.js');
@@ -1479,6 +1479,10 @@ var visualizationModule = require('./visualization.js');
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
 var insertion = insertionModule();
+var selection = selectionModule();
+var quick = quickModule();
+var merge = mergeModule();
+
 
 //init shared variables
 var shuffledArray;
@@ -1510,6 +1514,10 @@ $(document).ready(function() {
     insertion.insertionSort(shuffledArray);
   });
 
+  $('#selection').click(function() {
+    selection.selectionSort(shuffledArray);
+  });
+
   $('#reset').click(function() {
     reset();
   });
@@ -1518,9 +1526,10 @@ $(document).ready(function() {
 //create a button for each algorithm and reset func
 createButton('bubble', 'Bubble Sort');
 createButton('insertion', 'Insertion Sort');
+createButton('selection', 'Selection Sort');
 createButton('reset', 'Reset');
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_2972ad8.js","/")
-},{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":11,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_4b31f293.js","/")
+},{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":12,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1529,6 +1538,11 @@ var visualizer = visualizationModule();
 
 var insertionModule = module.exports = (function() {
 
+  /**
+   * Callback function that is called when the sorting animation is completed
+   * @param  {[array]} array
+   * @return {[array]}
+   */
   function endAnimation(array) {
     console.log('END');
     return array
@@ -1558,6 +1572,7 @@ var insertionModule = module.exports = (function() {
       //loop through our array
       var interval = setInterval(insertionFrame.bind(null, array, endAnimation), 10);
 
+      //init i to 1
       var i = 1;
 
       //Iterate over each element in the array - for each element we will be finding the correct place to put this element
@@ -1567,6 +1582,7 @@ var insertionModule = module.exports = (function() {
         //init j to i
         var j = i;
 
+        //once we have gone through the entire array once - end the animation.
         if ( i >=  array.length ) {
           console.log('enter clear Interval')
           clearInterval(interval);
@@ -1578,14 +1594,19 @@ var insertionModule = module.exports = (function() {
 
           //shift the number down the array and give us a space to insert our current value
           swap(array, j, j - 1)
-          console.log(array)
+
+          //draw the newly swapped array onto the DOM
           visualizer.drawArray(array);
 
           //decrement j to go through our entire array
           j--;
         }
+
+        //everytime the array goes through the entire array again - update i to advance to the next element in the array.
         i++;
       };
+
+      //return the sorted array
       return array;
     }
 
@@ -1598,7 +1619,7 @@ var insertionModule = module.exports = (function() {
 // // console.log(bubble);
 // console.log(bubble.insertionSort(arr), ' Insterton Sort');
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/insertionsort.js","/")
-},{"./visualization.js":11,"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
+},{"./visualization.js":12,"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1779,22 +1800,73 @@ var quickModule = module.exports = (function() {
 },{"buffer":1,"oMfpAn":4}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
+var sortHelperModule = require('./sortHelper.js');
+var sortHelper = sortHelperModule();
 
 var selectionModule = module.exports = (function() {
+
+  //swap method because its used multiple times
+  function swap (array, index1, index2) {
+
+    //store a tmp variable at pos index2
+    var tmp = array[index2];
+
+    //set value  of index2 to our value at index
+    array[index2] = array[index1];
+
+    //set our value of index1 to our stored variable
+    array[index1] = tmp;
+  }
 
   //Everything after the return statement is public
   return {
 
-    selectionSort : function (arr) {
-      for (var i = o; i < arr.length - 1; i++) {
+    selectionSort : function ( array ) {
+      for ( var i = 0; i < array.length - 1; i++ ) {
         var min = i;
-        for (var j = i+1; j < arr.length; j++) {
-          if (arr[i] < arr[min]) {
-
+        for ( var j = i + 1; j < array.length; j++ ) {
+          if ( array[j] < array[min] ) {
+            min = j;
           }
         };
+        if ( min !== i ) {
+          swap( array, i, min );
+          console.log( array );
+        }
       }
-      return 'HAVE NOT DONE YET'
+      return array;
+    }
+
+  }
+
+});
+
+var arr = [5,1,4,2,8];
+var selection = selectionModule();
+// console.log(selection);
+console.log(selection.selectionSort(arr));
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/selectionsort.js","/")
+},{"./sortHelper.js":11,"buffer":1,"oMfpAn":4}],11:[function(require,module,exports){
+(function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
+'use strict';
+
+var sortHelperModule = module.exports = (function() {
+
+  //Everything after the return statement is public
+  return {
+
+    //swap method
+    swap : function(array, index1, index2) {
+      console.log('swap')
+
+      //store a tmp variable at pos index2
+      var tmp = array[index2];
+
+      //set value  of index2 to our value at index
+      array[index2] = array[index1];
+
+      //set our value of index1 to our stored variable
+      array[index1] = tmp;
     }
 
   }
@@ -1805,8 +1877,8 @@ var selectionModule = module.exports = (function() {
 // var selection = selectionModule();
 // // console.log(selection);
 // console.log(selection.selectionSort(arr));
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/selectionsort.js","/")
-},{"buffer":1,"oMfpAn":4}],11:[function(require,module,exports){
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/sortHelper.js","/")
+},{"buffer":1,"oMfpAn":4}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 

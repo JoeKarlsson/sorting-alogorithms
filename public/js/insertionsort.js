@@ -5,6 +5,11 @@ var visualizer = visualizationModule();
 
 var insertionModule = module.exports = (function() {
 
+  /**
+   * Callback function that is called when the sorting animation is completed
+   * @param  {[array]} array
+   * @return {[array]}
+   */
   function endAnimation(array) {
     console.log('END');
     return array
@@ -34,6 +39,7 @@ var insertionModule = module.exports = (function() {
       //loop through our array
       var interval = setInterval(insertionFrame.bind(null, array, endAnimation), 10);
 
+      //init i to 1
       var i = 1;
 
       //Iterate over each element in the array - for each element we will be finding the correct place to put this element
@@ -43,6 +49,7 @@ var insertionModule = module.exports = (function() {
         //init j to i
         var j = i;
 
+        //once we have gone through the entire array once - end the animation.
         if ( i >=  array.length ) {
           console.log('enter clear Interval')
           clearInterval(interval);
@@ -54,14 +61,19 @@ var insertionModule = module.exports = (function() {
 
           //shift the number down the array and give us a space to insert our current value
           swap(array, j, j - 1)
-          console.log(array)
+
+          //draw the newly swapped array onto the DOM
           visualizer.drawArray(array);
 
           //decrement j to go through our entire array
           j--;
         }
+
+        //everytime the array goes through the entire array again - update i to advance to the next element in the array.
         i++;
       };
+
+      //return the sorted array
       return array;
     }
 

@@ -9,6 +9,10 @@ var visualizationModule = require('./visualization.js');
 var visualizer = visualizationModule();
 var bubble = bubbleModule();
 var insertion = insertionModule();
+var selection = selectionModule();
+var quick = quickModule();
+var merge = mergeModule();
+
 
 //init shared variables
 var shuffledArray;
@@ -40,6 +44,10 @@ $(document).ready(function() {
     insertion.insertionSort(shuffledArray);
   });
 
+  $('#selection').click(function() {
+    selection.selectionSort(shuffledArray);
+  });
+
   $('#reset').click(function() {
     reset();
   });
@@ -48,4 +56,5 @@ $(document).ready(function() {
 //create a button for each algorithm and reset func
 createButton('bubble', 'Bubble Sort');
 createButton('insertion', 'Insertion Sort');
+createButton('selection', 'Selection Sort');
 createButton('reset', 'Reset');
