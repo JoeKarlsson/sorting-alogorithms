@@ -1,5 +1,11 @@
 'use strict';
 
+var visualizationModule = require('./visualization.js');
+var sortHelperModule = require('./sortHelper.js');
+
+var visualizer = visualizationModule();
+var sortHelper = sortHelperModule();
+
 var quickModule = module.exports = (function() {
   //Privat Methods and variables
 
@@ -31,23 +37,10 @@ var quickModule = module.exports = (function() {
 
     //swap our hi value back with the index value, this is putting our pivot value
     //back where it rightfully belongs
-    swap(arr, index, hi);
+    sortHelper.swap(arr, index, hi);
 
     //return the index for a new pivot in recursively calling quickSort
     return index;
-  }
-
-  //swap method because its used multiple times
-  function swap (array, index1, index2) {
-
-    //store a tmp variable at pos index2
-    var tmp = array[index2];
-
-    //set value  of index2 to our value at index
-    array[index2] = array[index1];
-
-    //set our value of index1 to our stored variable
-    array[index1] = tmp;
   }
 
   //Public methods

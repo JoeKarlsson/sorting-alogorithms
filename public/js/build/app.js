@@ -1528,13 +1528,16 @@ createButton('bubble', 'Bubble Sort');
 createButton('insertion', 'Insertion Sort');
 createButton('selection', 'Selection Sort');
 createButton('reset', 'Reset');
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_4b31f293.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_a27adbe.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":12,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
 var visualizationModule = require('./visualization.js');
+var sortHelperModule = require('./sortHelper.js');
+
 var visualizer = visualizationModule();
+var sortHelper = sortHelperModule();
 
 var insertionModule = module.exports = (function() {
 
@@ -1546,19 +1549,6 @@ var insertionModule = module.exports = (function() {
   function endAnimation(array) {
     console.log('END');
     return array
-  }
-
-  //swap method because its used multiple times
-  function swap (array, index1, index2) {
-
-    //store a tmp variable at pos index2
-    var tmp = array[index2];
-
-    //set value  of index2 to our value at index
-    array[index2] = array[index1];
-
-    //set our value of index1 to our stored variable
-    array[index1] = tmp;
   }
 
   return {
@@ -1593,7 +1583,7 @@ var insertionModule = module.exports = (function() {
         while ( j > 0 && (array[j - 1] > array[j]) ) {
 
           //shift the number down the array and give us a space to insert our current value
-          swap(array, j, j - 1)
+          sortHelper.swap(array, j, j - 1)
 
           //draw the newly swapped array onto the DOM
           visualizer.drawArray(array);
@@ -1619,7 +1609,7 @@ var insertionModule = module.exports = (function() {
 // // console.log(bubble);
 // console.log(bubble.insertionSort(arr), ' Insterton Sort');
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/insertionsort.js","/")
-},{"./visualization.js":12,"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
+},{"./sortHelper.js":11,"./visualization.js":12,"buffer":1,"oMfpAn":4}],8:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1697,6 +1687,12 @@ var mergeModule = module.exports = (function() {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
+var visualizationModule = require('./visualization.js');
+var sortHelperModule = require('./sortHelper.js');
+
+var visualizer = visualizationModule();
+var sortHelper = sortHelperModule();
+
 var quickModule = module.exports = (function() {
   //Privat Methods and variables
 
@@ -1728,23 +1724,10 @@ var quickModule = module.exports = (function() {
 
     //swap our hi value back with the index value, this is putting our pivot value
     //back where it rightfully belongs
-    swap(arr, index, hi);
+    sortHelper.swap(arr, index, hi);
 
     //return the index for a new pivot in recursively calling quickSort
     return index;
-  }
-
-  //swap method because its used multiple times
-  function swap (array, index1, index2) {
-
-    //store a tmp variable at pos index2
-    var tmp = array[index2];
-
-    //set value  of index2 to our value at index
-    array[index2] = array[index1];
-
-    //set our value of index1 to our stored variable
-    array[index1] = tmp;
   }
 
   //Public methods
@@ -1797,41 +1780,45 @@ var quickModule = module.exports = (function() {
 // var quick = quickModule();
 // console.log(quick.quickSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/quicksort.js","/")
-},{"buffer":1,"oMfpAn":4}],10:[function(require,module,exports){
+},{"./sortHelper.js":11,"./visualization.js":12,"buffer":1,"oMfpAn":4}],10:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
+
+var visualizationModule = require('./visualization.js');
 var sortHelperModule = require('./sortHelper.js');
+
+var visualizer = visualizationModule();
 var sortHelper = sortHelperModule();
 
 var selectionModule = module.exports = (function() {
 
-  //swap method because its used multiple times
-  function swap (array, index1, index2) {
-
-    //store a tmp variable at pos index2
-    var tmp = array[index2];
-
-    //set value  of index2 to our value at index
-    array[index2] = array[index1];
-
-    //set our value of index1 to our stored variable
-    array[index1] = tmp;
-  }
-
-  //Everything after the return statement is public
   return {
 
     selectionSort : function ( array ) {
+
+      // advance the position through the entire array (could do j < n-1 because single element is also min element)
       for ( var i = 0; i < array.length - 1; i++ ) {
+
+        // find the min element in the unsorted a[i .. n-1] assume the min is the first element
         var min = i;
+
+        // Test against elements after j to find the smallest
         for ( var j = i + 1; j < array.length; j++ ) {
+
+          // if this element is less, then it is the new minimum
           if ( array[j] < array[min] ) {
+
+            // found new minimum; remember its index
             min = j;
           }
-        };
+        }
+
+        // if the minimum number we found on our pass is not equal to our starting number, then make the swap
         if ( min !== i ) {
-          swap( array, i, min );
-          console.log( array );
+          sortHelper.swap( array, i, min );
+
+          //draw the newly swapped array onto the DOM
+          visualizer.drawArray(array);
         }
       }
       return array;
@@ -1843,10 +1830,9 @@ var selectionModule = module.exports = (function() {
 
 var arr = [5,1,4,2,8];
 var selection = selectionModule();
-// console.log(selection);
 console.log(selection.selectionSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/selectionsort.js","/")
-},{"./sortHelper.js":11,"buffer":1,"oMfpAn":4}],11:[function(require,module,exports){
+},{"./sortHelper.js":11,"./visualization.js":12,"buffer":1,"oMfpAn":4}],11:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
@@ -1857,7 +1843,6 @@ var sortHelperModule = module.exports = (function() {
 
     //swap method
     swap : function(array, index1, index2) {
-      console.log('swap')
 
       //store a tmp variable at pos index2
       var tmp = array[index2];
@@ -1872,11 +1857,6 @@ var sortHelperModule = module.exports = (function() {
   }
 
 });
-
-// var arr = [5,1,4,2,8];
-// var selection = selectionModule();
-// // console.log(selection);
-// console.log(selection.selectionSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/sortHelper.js","/")
 },{"buffer":1,"oMfpAn":4}],12:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){

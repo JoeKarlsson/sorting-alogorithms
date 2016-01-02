@@ -7,7 +7,6 @@ var sortHelperModule = module.exports = (function() {
 
     //swap method
     swap : function(array, index1, index2) {
-      console.log('swap')
 
       //store a tmp variable at pos index2
       var tmp = array[index2];
@@ -22,8 +21,3 @@ var sortHelperModule = module.exports = (function() {
   }
 
 });
-
-// var arr = [5,1,4,2,8];
-// var selection = selectionModule();
-// // console.log(selection);
-// console.log(selection.selectionSort(arr));
