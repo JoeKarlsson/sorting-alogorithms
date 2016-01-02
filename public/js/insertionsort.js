@@ -4,6 +4,12 @@ var visualizationModule = require('./visualization.js');
 var visualizer = visualizationModule();
 
 var insertionModule = module.exports = (function() {
+
+  function endAnimation(array) {
+    console.log('END');
+    return array
+  }
+
   //swap method because its used multiple times
   function swap (array, index1, index2) {
 
@@ -23,26 +29,40 @@ var insertionModule = module.exports = (function() {
      * @param  array unsorted array that will be sort
      * @return array sorted array
      */
-    insertionSort : function (a) {
+    insertionSort : function (array) {
+
+      //loop through our array
+      var interval = setInterval(insertionFrame.bind(null, array, endAnimation), 10);
+
+      var i = 1;
 
       //Iterate over each element in the array - for each element we will be finding the correct place to put this element
-      for (var i = 1; i < a.length-1; i++) {
+      // for (var i = 1; i < a.length-1; i++) {
+      function insertionFrame(array, callback) {
 
         //init j to i
         var j = i;
 
+        if ( i >=  array.length ) {
+          console.log('enter clear Interval')
+          clearInterval(interval);
+          callback(array);
+        }
+
         //while our previous number is greater than 0, and the number we're comparing is less than our previous number enter our loop
-        while ( j > 0 && (a[j - 1] > a[j]) ) {
+        while ( j > 0 && (array[j - 1] > array[j]) ) {
 
           //shift the number down the array and give us a space to insert our current value
-          swap(a, j, j - 1)
-          visualizer.drawArray(a);
+          swap(array, j, j - 1)
+          console.log(array)
+          visualizer.drawArray(array);
 
           //decrement j to go through our entire array
           j--;
         }
+        i++;
       };
-      return a;
+      return array;
     }
 
   }

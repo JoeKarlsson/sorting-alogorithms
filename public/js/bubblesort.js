@@ -22,7 +22,7 @@ var bubbleModule = module.exports = (function() {
       var swapped = true;
 
       //loop through our array
-      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 500);
+      var interval = setInterval(bubbleFrame.bind(null, array, endAnimation), 10);
 
       var i = 1;
 
