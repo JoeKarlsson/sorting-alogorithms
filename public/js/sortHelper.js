@@ -1,12 +1,12 @@
 'use strict';
 
-var sortHelperModule = module.exports = (function() {
+var sortHelperModule = module.exports = ( function() {
 
   //Everything after the return statement is public
   return {
 
     //swap method
-    swap : function(array, index1, index2) {
+    swap : function( array, index1, index2 ) {
 
       //store a tmp variable at pos index2
       var tmp = array[index2];

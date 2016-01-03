@@ -1399,7 +1399,10 @@ process.chdir = function (dir) {
 'use strict';
 
 var visualizationModule = require( './visualization.js' );
+var sortHelperModule = require( './sortHelper.js' );
+
 var visualizer = visualizationModule();
+var sortHelper = sortHelperModule();
 
 var bubbleModule = module.exports = ( function() {
 
@@ -1439,11 +1442,8 @@ var bubbleModule = module.exports = ( function() {
         }
 
         if ( array[i - 1] > array[i] ) {
-          prev = array[i - 1];
 
-          array[i - 1] = array[i];
-
-          array[i] = prev;
+          sortHelper.swap( array, i, i - 1 );
 
           swapped = true;
 
@@ -1464,7 +1464,7 @@ var bubbleModule = module.exports = ( function() {
 // var bubbleModule = bubbleModule();
 // bubbleModule.bubbleSort(arr);
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/bubblesort.js","/")
-},{"./visualization.js":12,"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
+},{"./sortHelper.js":11,"./visualization.js":12,"buffer":1,"oMfpAn":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var bubbleModule = require('./bubblesort.js');
 var quickModule = require('./quicksort.js');
@@ -1526,7 +1526,7 @@ createButton('bubble', 'Bubble Sort');
 createButton('insertion', 'Insertion Sort');
 createButton('selection', 'Selection Sort');
 createButton('reset', 'Reset');
-}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_5b14ea02.js","/")
+}).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_41105bb0.js","/")
 },{"./bubblesort.js":5,"./insertionsort.js":7,"./mergesort.js":8,"./quicksort.js":9,"./selectionsort.js":10,"./visualization.js":12,"buffer":1,"oMfpAn":4}],7:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
@@ -1611,39 +1611,39 @@ var insertionModule = module.exports = (function() {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
-var mergeModule = module.exports = (function() {
+var mergeModule = module.exports = ( function() {
 
   //used to merge all of our pieces back together after recursively separating the array
-  function merge (left, right) {
+  function merge ( left, right ) {
 
     //initialize array to return
     var result = [];
 
     //if both of our split arrays have items inside go through this while loop
-    while (left.length > 0 && right.length > 0) {
+    while ( left.length > 0 && right.length > 0 ) {
 
       //compare the first element of each array
-      if (left[0] <= right[0]) {
+      if ( left[0] <= right[0] ) {
 
         //if the left element is smaller, push it
         //to our return array
-        result.push(left.shift());
+        result.push( left.shift() );
       } else {
 
         //if the right element is smaller, push it
         //to our return array
-        result.push(right.shift());
+        result.push( right.shift() );
       }
     }
 
     //if only our left array has an element left, push that
-    while (left.length > 0) {
-      result.push(left.shift());
+    while ( left.length > 0 ) {
+      result.push( left.shift() );
     }
 
     //if only our right array has an element left, push that
-    while (right.length > 0) {
-      result.push(right.shift());
+    while ( right.length > 0 ) {
+      result.push( right.shift() );
     }
 
     //return the sorted array
@@ -1652,50 +1652,47 @@ var mergeModule = module.exports = (function() {
 
   return {
 
-    mergeSort : function (arr) {
+    mergeSort : function ( arr ) {
       //Base Case - if the array is length 0 or 1, then we can assume it is already sorted and return it
-      if (arr.length < 2) {
+      if ( arr.length < 2 ) {
         return arr;
       }
 
       //pick a pivot at our the middle of our arr
-      var pivot = (Math.floor(arr.length / 2));
+      var pivot = ( Math.floor( arr.length / 2 ) );
 
       //separate the arr into two places, everything before it
-      var pLeft = arr.slice(0, pivot);
+      var pLeft = arr.slice( 0, pivot );
 
       //and everything after
-      var pRight = arr.slice(pivot, arr.length);
+      var pRight = arr.slice( pivot, arr.length );
 
       //call our mergeSort recursively on this array, splitting it further and further until it hits our base case and the array is split into lengths less than 2
-      return merge(this.mergeSort(pLeft), this.mergeSort(pRight));
+      return merge( this.mergeSort( pLeft ), this.mergeSort( pRight ) );
     }
 
   }
 });
 
 // var arr = [6,3,8,1,5,4,7,2];
-// // var arr = [3,2,1]
 // var merge = mergeModule();
-
-// // console.log(merge);
 // console.log(merge.mergeSort(arr));
 }).call(this,require("oMfpAn"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/mergesort.js","/")
 },{"buffer":1,"oMfpAn":4}],9:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
-var visualizationModule = require('./visualization.js');
-var sortHelperModule = require('./sortHelper.js');
+var visualizationModule = require( './visualization.js' );
+var sortHelperModule = require( './sortHelper.js' );
 
 var visualizer = visualizationModule();
 var sortHelper = sortHelperModule();
 
-var quickModule = module.exports = (function() {
+var quickModule = module.exports = ( function() {
   //Privat Methods and variables
 
   //function for creating our partitions and swapping
-  function partition (arr, pivot, lo, hi) {
+  function partition ( arr, pivot, lo, hi ) {
 
     // the value of our pivot, where pivot is the index
     var pivotValue = arr[pivot];
@@ -1704,25 +1701,22 @@ var quickModule = module.exports = (function() {
     var index = lo;
 
     //swap our pivot to the end, because we want it in the hi partition
-    swap(arr, hi, pivot);
+    swap( arr, hi, pivot );
 
     // loop through our array, from our lo value, to our hi value
-    for (var i = lo; i < hi; i++) {
+    for ( var i = lo; i < hi; i++ ) {
 
-      //if the value at this position is less than our pivot value, then it needs to be sorted
-      //to the left
-      if (arr[i] < pivotValue) {
+      //if the value at this position is less than our pivot value, then it needs to be sorted to the left
+      if ( arr[i] < pivotValue ) {
 
-        //swap it and the index, and now that we know it should be sorted
-        //increment the index because its been sorted
-        swap(arr, i, index);
+        //swap it and the index, and now that we know it should be sorted increment the index because its been sorted
+        swap( arr, i, index );
         index++;
       }
     }
 
-    //swap our hi value back with the index value, this is putting our pivot value
-    //back where it rightfully belongs
-    sortHelper.swap(arr, index, hi);
+    //swap our hi value back with the index value, this is putting our pivot value back where it rightfully belongs
+    sortHelper.swap( arr, index, hi );
 
     //return the index for a new pivot in recursively calling quickSort
     return index;
@@ -1730,40 +1724,38 @@ var quickModule = module.exports = (function() {
 
   //Public methods
   return {
-    /*  Known as partition-exchange sort, quicksort picks a pivot from a partition
-    *   (assuming the first partition is our array). Reorders our array into lower
-    *   higher value partitions, then recursively creates partitions until it cannot.
-    *  takes in the array and optionally low and high parameters for recursion
+
+    /*  Known as partition-exchange sort, quicksort picks a pivot from a partition (assuming the first partition is our array). Reorders our array into lower higher value partitions, then recursively creates partitions until it cannot. takes in the array and optionally low and high parameters for recursion
     */
-    quickSort : function(array, low, high) {
+    quickSort : function( array, low, high ) {
 
       //reset our pivot for recursive use
       var pivot = null;
 
       //used for initialization, begin on the end
-      if (typeof low !== 'number') {
+      if ( typeof low !== 'number' ) {
         low = 0;
       }
 
       //used for initialization, begin on the end
-      if (typeof high !== 'number') {
+      if ( typeof high !== 'number' ) {
         high = array.length - 1;
       }
 
       //base case for recursion, if low is >= high, then its already sorted
-      if (low < high) {
+      if ( low < high ) {
 
         //create a point between our low and high values
-        pivot = low + (Math.ceil((high - low) * 0.5));
+        pivot = low + ( Math.ceil( ( high - low ) * 0.5 ) );
 
         //create the positions and partitions to be recursively sorted
-        var nextPivot = partition(array, pivot, low, high);
+        var nextPivot = partition( array, pivot, low, high );
 
         //sort from low, to the pivot - 1, because nextPivot belongs where it is
-        this.quickSort(array, low, nextPivot - 1);
+        this.quickSort( array, low, nextPivot - 1 );
 
         //sort from pivot + 1 to high
-        this.quickSort(array, nextPivot + 1, high);
+        this.quickSort( array, nextPivot + 1, high );
 
       }
 
@@ -1809,8 +1801,6 @@ var selectionModule = module.exports = ( function () {
 
       // advance the position through the entire array (could do j < n-1 because single element is also min element)
       var interval = setInterval( selectionFrame.bind( null, array, endAnimation ), 10 );
-
-      //for ( var i = 0; i < array.length - 1; i++ ) {
 
       var i = 0;
 
@@ -1863,13 +1853,13 @@ var selectionModule = module.exports = ( function () {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 'use strict';
 
-var sortHelperModule = module.exports = (function() {
+var sortHelperModule = module.exports = ( function() {
 
   //Everything after the return statement is public
   return {
 
     //swap method
-    swap : function(array, index1, index2) {
+    swap : function( array, index1, index2 ) {
 
       //store a tmp variable at pos index2
       var tmp = array[index2];
@@ -1891,16 +1881,13 @@ var sortHelperModule = module.exports = (function() {
 
 var visualizationModule = module.exports = (function() {
 
-  //length of the array
+  // length of the array
   var inputNumber = 70;
 
-  //method called in createGrid that takes in
-  //data from the array and makes a visual
-  //representation from it according to height
-  //and color
-  function createCell (data, index) {
+  // method called in createGrid that takes in data from the array and makes a visual representation from it according to height and color
+  function createCell ( data, index ) {
 
-    var cell = document.createElement('div');
+    var cell = document.createElement( 'div' );
     cell.style.width = '8px';
     cell.style.height = data + '2px';
     cell.style.fontSize = '8px';
@@ -1909,47 +1896,47 @@ var visualizationModule = module.exports = (function() {
     cell.id = 'div' + index;
     cell.innerHTML = data;
 
-    //hex value parsing
-    data = data.toString(16);
-    if (data.length < 2) {
+    // hex value parsing
+    data = data.toString( 16 );
+    if ( data.length < 2 ) {
       data = '0' + data;
     }
+
     cell.style.backgroundColor = '#' + '00' + data + data;
     return cell;
   }
 
   return {
 
-    //first generate a sorted array for inputNumber length
-    makeSorted : function (input) {
+    // first generate a sorted array for inputNumber length
+    makeSorted : function ( input ) {
       var array = [];
-      for (var i = 0; i < inputNumber; i++) {
-        array.push(i + 1);
+      for ( var i = 0; i < inputNumber; i++ ) {
+        array.push( i + 1 );
       }
       return array;
     },
 
-    //set method for later user interaction
-    setLength : function (input) {
+    // set method for later user interaction
+    setLength : function ( input ) {
       inputNumber = input;
     },
 
-    //take our newly generated sorted array
-    //and randomly scramble it
+    // take our newly generated sorted array and randomly scramble it
     getRandomArray : function() {
-      var newArray = this.makeSorted(inputNumber);
+      var newArray = this.makeSorted( inputNumber );
       var currentIndex = newArray.length;
       var temporaryValue;
       var randomIndex;
 
-      //while there remain elements to shuffle
-      while (currentIndex > 0) {
+      // while there remain elements to shuffle
+      while ( currentIndex > 0 ) {
 
-        //pick a remaining element
-        randomIndex = Math.floor(Math.random() * currentIndex);
+        // pick a remaining element
+        randomIndex = Math.floor( Math.random() * currentIndex );
         currentIndex--;
 
-        //and swap it with the current element
+        // and swap it with the current element
         temporaryValue = newArray[currentIndex];
         newArray[currentIndex] = newArray[randomIndex];
         newArray[randomIndex] = temporaryValue;
@@ -1957,34 +1944,32 @@ var visualizationModule = module.exports = (function() {
       return newArray;
     },
 
-    drawArray : function (array) {
-      //get our container in static HTML page
-      var container = document.querySelector('#visualizer');
+    drawArray : function ( array ) {
+      // get our container in static HTML page
+      var container = document.querySelector( '#visualizer' );
 
       createGrid( array );
 
-      //method generates a dom element with an
-      //array parameter
-      function createGrid (array) {
+      // method generates a dom element with an array parameter
+      function createGrid ( array ) {
 
-        //if it exists already, clear it
-        if (document.querySelector('#grid')) {
-          container.removeChild(document.querySelector('#grid'));
+        // if it exists already, clear it
+        if ( document.querySelector( '#grid' ) ) {
+          container.removeChild( document.querySelector( '#grid' ) );
         }
 
-        //create a new DOM element to append the pieces to
-        var grid = document.createElement('div');
+        // create a new DOM element to append the pieces to
+        var grid = document.createElement( 'div' );
         grid.id = 'grid';
-        container.appendChild(grid);
+        container.appendChild( grid );
 
-        //loop through and for the arrays length
-        //generate a new cell for the arrays data
+        // loop through and for the arrays length generate a new cell for the arrays data
         var piece;
-        for (var i = 0; i < array.length; i++) {
-          piece = createCell(array[i], i);
+        for ( var i = 0; i < array.length; i++ ) {
+          piece = createCell( array[i], i );
 
-          //attach it to the container
-          grid.appendChild(piece);
+          // attach it to the container
+          grid.appendChild( piece );
         }
 
       }

@@ -1,7 +1,10 @@
 'use strict';
 
 var visualizationModule = require( './visualization.js' );
+var sortHelperModule = require( './sortHelper.js' );
+
 var visualizer = visualizationModule();
+var sortHelper = sortHelperModule();
 
 var bubbleModule = module.exports = ( function() {
 
@@ -41,11 +44,8 @@ var bubbleModule = module.exports = ( function() {
         }
 
         if ( array[i - 1] > array[i] ) {
-          prev = array[i - 1];
 
-          array[i - 1] = array[i];
-
-          array[i] = prev;
+          sortHelper.swap( array, i, i - 1 );
 
           swapped = true;
 

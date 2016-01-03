@@ -28,8 +28,6 @@ var selectionModule = module.exports = ( function () {
       // advance the position through the entire array (could do j < n-1 because single element is also min element)
       var interval = setInterval( selectionFrame.bind( null, array, endAnimation ), 10 );
 
-      //for ( var i = 0; i < array.length - 1; i++ ) {
-
       var i = 0;
 
       // find the min element in the unsorted a[i .. n-1] assume the min is the first element

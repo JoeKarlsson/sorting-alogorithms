@@ -13,8 +13,12 @@ describe('Bubble Sort', function () {
   var bubble = bubbleModule();
   var result = bubble.bubbleSort([3,2,1]);
 
-  it('should be a module that exists', function () {
+  it('should be a function that exists', function () {
     expect(bubbleModule).to.be.a('function');
+  });
+
+  it('should be a module that exists', function () {
+    expect(bubble).to.be.a('object');
   });
 
   it('should be return a sorted array', function () {
