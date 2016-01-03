@@ -10,7 +10,7 @@ Click on the different sorting algorithms to see visualizations for each differe
 
 ## bubble sort
 
-### [javascript implementation](public/js/bubbleSort.js)
+### [javascript implementation](public/js/bubblesort.js)
 
 Bubble sort works in a nature similar to its name, the lesser or lighter values will 'bubble' to the beginning of the array, and the heavier values will sink.
 ```
@@ -36,7 +36,7 @@ Exponentially increases time spent to sort. O(n^2)
 
 ## merge sort
 
-### [javascript implementation](public/js/mergeSort.js)
+### [javascript implementation](public/js/mergesort.js)
 
 The process for this method takes two procedures, first splitting the array into smaller lists, then merging those lists back together, comparing the values of the two lists. Recursion is used to split the array into the smallest possible lists.
 ``` psuedocode
@@ -74,7 +74,7 @@ Logarithimically and linearlly increases time spent to sort with size array. It'
 
 ## insertion sort
 
-### [javascript implementation](public/js/insertion.js)
+### [javascript implementation](public/js/insertionsort.js)
 
 For each iteration in our insertion sort method, a single element is taken to find its location in a new sorted list. This pattern repeats until the old array has no elements left.
 
@@ -96,7 +96,7 @@ Exponentially increases time with size. O(n^2)
 
 ## selection sort
 
-### [javascript implementation](public/js/selection.js)
+### [javascript implementation](public/js/selectionsort.js)
 
 Searches the array to find the smallest value, then loops again to find the next smallest value. Assuming minimum is the first element, we compare our minimums then swap it with the position it should be in from the beginning.
 
@@ -121,7 +121,7 @@ Exponentially increases time with size. O(n^2)
 
 ## quicksort
 
-### [javascript implementation](public/js/quickSort.js)
+### [javascript implementation](public/js/quicksort.js)
 
 Otherwise known as partition-exchange sort, quicksort picks a pivot from the array, then reorders the array with values lower than the pivot before the pivot, and higher values after the pivot. After this is done, pivot belongs in this position, and we recursively apply the same steps to the other partitions.
 
