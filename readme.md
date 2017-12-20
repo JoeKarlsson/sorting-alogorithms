@@ -1,5 +1,7 @@
 # Sorting Algorithms
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/JoeKarlsson/sorting-alogorithms.svg)](https://greenkeeper.io/)
+
 5 popular sorting algorithms implemented manually and visualized with DOM manipulation.
 The algorithms included are : bubble sort, merge sort, insertion sort, selection sort and quick sort. In addition to visualizations, this readme also includes high-level explanations and psuedo code for each sorting implementation, and big O worst case/ best case scenarios.
 
